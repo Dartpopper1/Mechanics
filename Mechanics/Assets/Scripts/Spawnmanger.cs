@@ -5,13 +5,14 @@ public class Spawnmanger : MonoBehaviour
 {
     public GameObject enemyPrefab;
     private float spawnRange = 9;
+    public bool hasPowerup;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
     }
 
-    private Vector3 GenerateSpawnPosition()
+    private Vector3 GenerateSpawnPosition() 
     {
         float spawnPosX = Random.Range(-spawnRange, spawnRange);
         float spawnPosZ = Random.Range(-spawnRange, spawnRange);
@@ -21,6 +22,14 @@ public class Spawnmanger : MonoBehaviour
         return randomPos;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Powerup"))
+        {
+            hasPowerup = true;
+            Destroy(other.gameObject);
+        }
+    }
 }
 
     // Update is called once per frame
